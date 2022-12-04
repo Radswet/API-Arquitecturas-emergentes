@@ -1,6 +1,6 @@
-import fs from 'fs-extra'
+const db = require('../services/db');
 
-export const createSensor_data = async (req, res) => {
+function createSensor_data (req){
   try {
 
     /*
@@ -11,14 +11,14 @@ export const createSensor_data = async (req, res) => {
     */
     //return status 201
   } catch (error) {
-    res.send({
+    return({
       status: 500, 
       message: error.message
     });
   }
 }
 
-export const getSensor_data = async (req, res) => {
+function getSensor_data(req){
   try {
     /*
       La autorización será posible mediante el uso de un Header HTTP o puede tener un parámetro en la URL &company_api_key=
@@ -29,46 +29,53 @@ export const getSensor_data = async (req, res) => {
     //return status 201
     return res.status(201).json({ message: "hola" });
   } catch (error) {
-    res.send({
+    return({
       status: 500, 
       message: error.message
     });
   }
 }
 
-export const getAllSensor_data = async (req, res) => {
+function getAllSensor_data (req) {
   try {
 
     return res.status(201).json({ message: "hola" });
   } catch (error) {
-    res.send({
+    return({
       status: 500, 
       message: error.message
     });
   }
 }
 
-export const updateSensor_data = async (req, res) => {
+function updateSensor_data (req){
   try {
 
     //return status 201
   } catch (error) {
-    res.send({
+    return({
       status: 500, 
       message: error.message
     });
   }
 }
 
-export const deleteSensor_data = async (req, res) => {
+function deleteSensor_data (req) {
   try {
 
     //return status 201
   } catch (error) {
-    res.send({
+    return({
       status: 500, 
       message: error.message
     });
   }
 }
 
+module.exports = {
+  createSensor_data,
+  getSensor_data,
+  getAllSensor_data,
+  updateSensor_data,
+  deleteSensor_data
+}

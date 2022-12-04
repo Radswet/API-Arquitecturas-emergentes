@@ -1,11 +1,16 @@
-import { PORT } from "./config.js";
-import app from "./app.js";
-//import { db } from "./utils/sqlite.js";
+const express = require('express');
+const app = express();
+const port = process.env.PORT || 3000;
+const Router = require('./routes/routes');
 
-function main() {
-  //db();
-  app.listen(PORT);
-  console.log("Server on port", PORT);
-}
+app.use(express.json());
 
-main();
+app.get('/', (req, res) => {
+  res.json({message: 'alive'});
+});
+
+app.use('/api/v1', Router);
+
+app.listen(port, () => {
+  console.log(` app listening at port ${port}`);
+});

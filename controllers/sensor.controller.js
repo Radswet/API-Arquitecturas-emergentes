@@ -1,47 +1,47 @@
-import fs from 'fs-extra'
+const db = require('../services/db');
 
-export const getSensor = async (req, res) =>{
+function getSensor (req){
   try {
     
     //return status 201
   } catch (error) {
-    res.send({
+    return({
       status: 500, 
       message: error.message
     });
   }
 }
 
-export const getAllSensor = async (req, res) =>{
+function getAllSensor (req){
   try {
     
     //return status 201
   } catch (error) {
-    res.send({
+    return({
       status: 500, 
       message: error.message
     });
   }
 }
 
-export const updateSensor = async (req, res) =>{
+function updateSensor (req){
   try {
     
     //return status 201
   } catch (error) {
-    res.send({
+    return({
       status: 500, 
       message: error.message
     });
   }
 }
 
-export const deleteSensor = async (req, res) =>{
+function deleteSensor (req) {
   try {
 
     //return status 201
   } catch (error) {
-    res.send({
+    return({
       status: 500, 
       message: error.message
     });
@@ -49,14 +49,22 @@ export const deleteSensor = async (req, res) =>{
 }
 
 
-export const createSensor = async (req, res) => {
+function createSensor (req) {
   try {
     
     //return status 201
   } catch (error) {
-    res.send({
+    return({
       status: 500, 
       message: error.message
     });
   }
+}
+
+module.exports = {  
+  getSensor,
+  getAllSensor,
+  updateSensor,
+  deleteSensor,
+  createSensor
 }

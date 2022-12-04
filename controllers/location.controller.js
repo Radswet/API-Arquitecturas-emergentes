@@ -1,51 +1,28 @@
-import fs from 'fs-extra'
-export const getAllLocation = async (req, res) =>{
-  try {
-    
-    res.send({
-      status: 201, 
-      message: locations
-    });
-  } catch (error) {
-    res.send({
-      status: 500, 
-      message: error.message
-    });
-  }
+const db = require('../services/db');
+
+function getAllLocation(){
+  const data = db.query('SELECT * FROM Location ');
+  return data;
 }
 
-export const getLocation = async (req, res) => {
-  try {
-    
-    //return status 201
-  } catch (error) {
-    res.send({
-      status: 500, 
-      message: error.message
-    });
-  }
+function getLocation (req){
+  const data = db.query('SELECT * FROM location WHERE company_id = ? LIMIT ?,?', [req, 0, 10]);
+  return data;
 }
 
-export const updateLocation = async (req, res) =>{
-  try {
-    
-    //return status 201
-  } catch (error) {
-    res.send({
-      status: 500, 
-      message: error.message
-    });
-  }
+function updateLocation (req) {
+  const data = db.query('', [req, 0, 10]);
+  return data;
 }
 
-export const deleteLocation = async (req, res) =>{
-  try {
-    
-    //return status 201
-  } catch (error) {
-    res.send({
-      status: 500, 
-      message: error.message
-    });
-  }
+function deleteLocation(req){
+  const result = db.run('DELETE FROM location WHERE company_id = ? ;', [req]);
+  return result;
+}
+
+module.exports = {
+  getAllLocation,
+  getLocation,
+  updateLocation,
+  deleteLocation
 }
