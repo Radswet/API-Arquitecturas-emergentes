@@ -1,0 +1,30 @@
+CREATE TABLE IF NOT EXISTS "Admin"(
+        "Username"	TEXT,
+        "Password"	TEXT
+)
+
+CREATE TABLE IF NOT EXISTS "Company"(
+		"ID" INTEGER,
+        "company_name"	TEXT,
+        "company_api_key"	TEXT,
+		PRIMARY KEY("ID" AUTOINCREMENT)
+)
+
+CREATE TABLE IF NOT EXISTS "Location"(
+		"company_id" INTEGER,
+        "location_name"	TEXT,
+        "location_country"	TEXT,
+		"location_city"	TEXT,
+		PRIMARY KEY("company_id" AUTOINCREMENT)
+)
+
+CREATE TABLE IF NOT EXISTS "Sensor"(
+		"location_id" INTEGER,
+        "sensor_id"	INTEGER,
+        "sensor_name"	TEXT,
+		"sensor_category"	TEXT,
+		"sensor_meta"	TEXT,
+		"sensor_api_key" TEXT,
+		PRIMARY KEY("sensor_id" AUTOINCREMENT),
+		FOREIGN KEY("location_id") REFERENCES "Location"("company_id")
+)
