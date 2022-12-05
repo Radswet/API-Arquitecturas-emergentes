@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const quotes = require('../services/quotes');
 
 const location = require('../controllers/location.controller');
 const sensor = require('../controllers/sensor.controller');
@@ -20,7 +19,7 @@ router.get("/location/:id", function (req, res) {
     });
   }
 });
-router.get("/location", function (req, res, next) {
+router.get("/location", function (req, res) {
   try {
     res.send({
       status: 201,
@@ -33,7 +32,19 @@ router.get("/location", function (req, res, next) {
     });
   }
 });
-router.put("/location", location.updateLocation);
+router.put("/location",function (req, res) {
+  try {
+    res.send({
+      status: 201,
+      message: location.updateLocation(req.body)
+    });
+  } catch (err) {
+    res.send({
+      status: 500,
+      message: err.message
+    });
+  }
+});
 router.delete("/location/:id", function (req, res, next) {
   try {
     res.send({
@@ -48,18 +59,98 @@ router.delete("/location/:id", function (req, res, next) {
   }
 });
 
+
 // Routes sensor
-router.get("/sensor:id", sensor.getSensor);
-router.get("/sensor", sensor.getAllSensor);
-router.put("/sensor", sensor.updateSensor);
-router.delete("/sensor", sensor.deleteSensor);
+/*router.get("/sensor:id", function (req, res) {
+  try {
+    res.send({
+      status: 201,
+      message: sensor.getSensor(req.params.id)
+    });
+  } catch (err) {
+    res.send({
+      status: 500,
+      message: err.message
+    });
+  }
+});*/
+router.get("/sensor", function (req, res) {
+  try {
+    res.send({
+      status: 201,
+      message: sensor.getAllSensor()
+    });
+  } catch (err) {
+    res.send({
+      status: 500,
+      message: err.message
+    });
+  }
+});
+router.put("/sensor", function (req, res) {
+  try {
+    res.send({
+      status: 201,
+      message: sensor.updateSensor(req.body)
+    });
+  } catch (err) {
+    res.send({
+      status: 500,
+      message: err.message
+    });
+}});
+router.delete("/sensor", function (req, res, next) {
+  try {
+    res.send({
+      status: 201,
+      message: sensor.deleteSensor(req.params.id)
+    });
+  } catch (err) {
+    res.send({
+      status: 500,
+      message: err.message
+    });
+  }
+});
 
 //Routes Sensor_Data
-router.post("/sensor_data", sensor_data.createSensor_data);//insercion de sensor
-router.get("/sensor_data:id", sensor_data.getSensor_data);//consulta de sensor
-router.get("/sensor_data", sensor_data.getAllSensor_data);//
-router.put("/sensor_data", sensor_data.updateSensor_data);
-router.delete("/sensor_data", sensor_data.deleteSensor_data);
+router.post("/sensor_data", function (req, res) {
+  try {
+    res.send(sensor_data.createSensor_data(req.body));
+  } catch (err) {
+    res.send(err.message);
+  }
+});//insercion de sensor
+router.get("/sensor_data:id", function (req, res) {
+  try {
+    res.send({
+      status: 201,
+      message: sensor_data.getAllSensor_data()
+    });
+  } catch (err) {
+    res.send({
+      status: 500,
+      message: err.message
+    });
+  }
+});//consulta de sensor
+
+/*router.get("/sensor_data", function (req, res) {
+  try {
+    res.send({
+      status: 201,
+      message: sensor_data.getAllSensor_data()
+    });
+  } catch (err) {
+    res.send({
+      status: 500,
+      message: err.message
+    });
+  }
+});*/
+
+//router.put("/sensor_data", sensor_data.updateSensor_data);
+//router.delete("/sensor_data", sensor_data.deleteSensor_data);
 
 
 

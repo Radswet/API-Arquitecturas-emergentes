@@ -1,72 +1,83 @@
 const db = require('../services/db');
 
-function createSensor_data (req){
+function createSensor_data(req) {
+  try {
+    const { sensor_api_key, sensor_id, value } = req;
+    
+    const query = db.query('SELECT * FROM Sensor WHERE sensor_id = ? AND sensor_api_key = ? ', [sensor_id, sensor_api_key]);
+    
+    if(query.length  <1){
+      return {
+        statucode: 500,
+        message: "No se encontró el sensor"
+      };;
+    }
+
+    const result = db.run('INSERT INTO sensor_data (sensor_id,  value) VALUES (@sensor_id,@value )', { sensor_id, value });
+
+    let message = 'se ha añadido la data del sensor';
+    if (result.changes) {
+      return {
+        statucode: 201,
+        message: "Se ha añadido la data del sensor"
+      };
+    }
+    return { message };
+  } catch (error) {
+
+    return {
+      statucode: 500,
+      message: error.message
+    };
+  }
+}
+
+function getSensor_data(req) {
+  try {
+    const { sensor_api_key, sensor_id, variable1 , variable2 } = req;
+    const result = db.run('INSERT INTO sensor_data (sensor_id,  variable1, variable2) VALUES (@sensor_id,@variable1, @variable2 )', { sensor_id, variable1, variable2 });
+
+    let message = 'se ha añadido la data del sensor';
+    if (result.changes) {
+      return {
+        statucode: 201,
+        message: "Se ha añadido la data del sensor"
+      };
+    }
+    return { message };
+  } catch (error) {
+
+    return {
+      statucode: 500,
+      message: error.message
+    };
+  }
+}
+
+function getAllSensor_data() {
+  const data = db.query('SELECT * FROM Sensor_data', []);
+  return data;
+}
+
+function updateSensor_data(req) {
   try {
 
-    /*
-    La inserción de sensor_data debe tener la siguiente estructura:
-      oPOST /api/v1/sensor_data
-      oInsertar datos ocupando el sensor_api_key como mecanismo de autorización.
-      o Debe retornar Status HTTP 201 (created)
-    */
     //return status 201
   } catch (error) {
-    return({
-      status: 500, 
+    return ({
+      status: 500,
       message: error.message
     });
   }
 }
 
-function getSensor_data(req){
-  try {
-    /*
-      La autorización será posible mediante el uso de un Header HTTP o puede tener un parámetro en la URL &company_api_key=
-        ▪from = < marca de tiempo en formato EPOCH >
-        ▪to = < marca de tiempo en formato EPOCH >
-        ▪sensor_id = [2,3,4,5,10,220] (Arreglo de sensor_id para los cuales se consultan los sensor_data)
-    */
-    //return status 201
-    return res.status(201).json({ message: "hola" });
-  } catch (error) {
-    return({
-      status: 500, 
-      message: error.message
-    });
-  }
-}
-
-function getAllSensor_data (req) {
-  try {
-
-    return res.status(201).json({ message: "hola" });
-  } catch (error) {
-    return({
-      status: 500, 
-      message: error.message
-    });
-  }
-}
-
-function updateSensor_data (req){
+function deleteSensor_data(req) {
   try {
 
     //return status 201
   } catch (error) {
-    return({
-      status: 500, 
-      message: error.message
-    });
-  }
-}
-
-function deleteSensor_data (req) {
-  try {
-
-    //return status 201
-  } catch (error) {
-    return({
-      status: 500, 
+    return ({
+      status: 500,
       message: error.message
     });
   }
