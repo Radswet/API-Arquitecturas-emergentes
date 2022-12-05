@@ -10,7 +10,7 @@ router.get("/location/:id", function (req, res) {
   try {
     res.send({
       status: 201,
-      message: location.getLocation(req.params.id)
+      message: location.getLocation(req.params.id, req.query.company_api_key)
     });
   } catch (err) {
     res.send({
@@ -23,7 +23,7 @@ router.get("/location", function (req, res) {
   try {
     res.send({
       status: 201,
-      message: location.getAllLocation()
+      message: location.getAllLocation(req.query.company_api_key)
     });
   } catch (err) {
     res.send({
@@ -36,7 +36,7 @@ router.put("/location",function (req, res) {
   try {
     res.send({
       status: 201,
-      message: location.updateLocation(req.body)
+      message: location.updateLocation(req.body,  req.query.company_api_key)
     });
   } catch (err) {
     res.send({
@@ -49,7 +49,7 @@ router.delete("/location/:id", function (req, res, next) {
   try {
     res.send({
       status: 201,
-      message: location.deleteLocation(req.params.id)
+      message: location.deleteLocation(req.params.id, req.query.company_api_key)
     });
   } catch (err) {
     res.send({
@@ -61,11 +61,11 @@ router.delete("/location/:id", function (req, res, next) {
 
 
 // Routes sensor
-/*router.get("/sensor:id", function (req, res) {
+router.get("/sensor/:id", function (req, res) {
   try {
     res.send({
       status: 201,
-      message: sensor.getSensor(req.params.id)
+      message: sensor.getSensor(req.params.id, req.query.company_api_key)
     });
   } catch (err) {
     res.send({
@@ -73,12 +73,12 @@ router.delete("/location/:id", function (req, res, next) {
       message: err.message
     });
   }
-});*/
+});
 router.get("/sensor", function (req, res) {
   try {
     res.send({
       status: 201,
-      message: sensor.getAllSensor()
+      message: sensor.getAllSensor(req.query.company_api_key)
     });
   } catch (err) {
     res.send({
@@ -91,7 +91,7 @@ router.put("/sensor", function (req, res) {
   try {
     res.send({
       status: 201,
-      message: sensor.updateSensor(req.body)
+      message: sensor.updateSensor(req.body, req.query.company_api_key)
     });
   } catch (err) {
     res.send({
@@ -103,7 +103,7 @@ router.delete("/sensor", function (req, res, next) {
   try {
     res.send({
       status: 201,
-      message: sensor.deleteSensor(req.params.id)
+      message: sensor.deleteSensor(req.params.id, req.query.company_api_key)
     });
   } catch (err) {
     res.send({
@@ -121,11 +121,12 @@ router.post("/sensor_data", function (req, res) {
     res.send(err.message);
   }
 });//insercion de sensor
-router.get("/sensor_data:id", function (req, res) {
+
+router.get("/sensor_data", function (req, res) {
   try {
     res.send({
       status: 201,
-      message: sensor_data.getAllSensor_data()
+      message: sensor_data.getSensor_data(req.body)
     });
   } catch (err) {
     res.send({
@@ -135,19 +136,6 @@ router.get("/sensor_data:id", function (req, res) {
   }
 });//consulta de sensor
 
-/*router.get("/sensor_data", function (req, res) {
-  try {
-    res.send({
-      status: 201,
-      message: sensor_data.getAllSensor_data()
-    });
-  } catch (err) {
-    res.send({
-      status: 500,
-      message: err.message
-    });
-  }
-});*/
 
 //router.put("/sensor_data", sensor_data.updateSensor_data);
 //router.delete("/sensor_data", sensor_data.deleteSensor_data);
