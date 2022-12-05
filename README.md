@@ -1,3 +1,5 @@
-# nodejs-sqlite
+# Tarea 3 Arquitecturas emergentes
 
-Node.js and SQLite example code for a blog post: https://geshan.com.np/blog/2021/10/nodejs-sqlite/
+La IP del deploy hecho, se encuentra en el informe enviado via canvas.
+
+
