@@ -45,11 +45,11 @@ router.put("/location",function (req, res) {
     });
   }
 });
-router.delete("/location/:id", function (req, res, next) {
+router.delete("/location", function (req, res, next) {
   try {
     res.send({
       status: 201,
-      message: location.deleteLocation(req.params.id, req.query.company_api_key)
+      message: location.deleteLocation(req.body.location_id, req.query.company_api_key)
     });
   } catch (err) {
     res.send({
@@ -103,7 +103,7 @@ router.delete("/sensor", function (req, res, next) {
   try {
     res.send({
       status: 201,
-      message: sensor.deleteSensor(req.params.id, req.query.company_api_key)
+      message: sensor.deleteSensor(req.body.sensor_id, req.query.company_api_key)
     });
   } catch (err) {
     res.send({
@@ -137,8 +137,34 @@ router.get("/sensor_data", function (req, res) {
 });//consulta de sensor
 
 
-//router.put("/sensor_data", sensor_data.updateSensor_data);
-//router.delete("/sensor_data", sensor_data.deleteSensor_data);
+router.put("/sensor_data", function (req, res) {
+  try {
+    res.send({
+      status: 201,
+      message: sensor_data.updateSensor_data(req.body, req.query.company_api_key)
+    });
+  } catch (err) {
+    res.send({
+      status: 500,
+      message: err.message
+    });
+  }
+});
+router.delete("/sensor_data", function (req, res, next) {
+  try {
+    res.send({
+      status: 201,
+      message: sensor_data.deleteSensor_data(req.body.sensor_id, req.query.company_api_key)
+    });
+  } catch (err) {
+    res.send({
+      status: 500,
+      message: err.message
+    });
+  }
+});
+
+
 
 
 

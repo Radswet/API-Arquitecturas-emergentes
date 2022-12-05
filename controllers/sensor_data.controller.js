@@ -56,28 +56,27 @@ function getSensor_data(body, params) {
 
 
 
-function updateSensor_data(req) {
-  try {
+function updateSensor_data(req, params) {
 
-    //return status 201
-  } catch (error) {
-    return ({
-      status: 500,
-      message: error.message
-    });
+  const query = db.query('SELECT * FROM Company WHERE company_api_key = ? ', [params]);
+    
+  if(query.length  <1){
+    return "No es valida la company api key"
   }
+
+  const data = db.run('UPDATE Sensor_data SET variable1 = ?, variable2 = ?  WHERE sensor_id = ?;', [req.variable1, req.variable2, req.sensor_id]);
+  return data;
 }
 
-function deleteSensor_data(req) {
-  try {
-
-    //return status 201
-  } catch (error) {
-    return ({
-      status: 500,
-      message: error.message
-    });
+function deleteSensor_data(req, params){
+  const query = db.query('SELECT * FROM Company WHERE company_api_key = ? ', [params]);
+    
+  if(query.length  <1){
+    return "No es valida la company api key"
   }
+
+  const result = db.run('DELETE FROM Sensor_data WHERE sensor_id = ? ;', [req]);
+  return result;
 }
 
 module.exports = {

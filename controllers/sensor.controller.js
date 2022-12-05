@@ -28,11 +28,11 @@ function updateSensor (req, params) {
     return "No es valida la company api key"
   }
 
-  const data = db.run('UPDATE Sensor SET location_id = ?, sensor_id = ?, sensor_name = ?, sensor_category = ?, sensor_meta = ?, sensor_api_key = ?, req.sensor_id = ?  WHERE sensor_id = ?;', [req.location_id, req.sensor_id, req.sensor_name, req.sensor_category, req.sensor_meta, req.sensor_api_key, req.sensor_id]);
+  const data = db.run('UPDATE Sensor SET location_id = ?, sensor_id = ?, sensor_name = ?, sensor_category = ?, sensor_meta = ?, sensor_api_key = ?  WHERE sensor_id = ?;', [req.location_id, req.sensor_id, req.sensor_name, req.sensor_category, req.sensor_meta, req.sensor_api_key, req.sensor_id]);
   return data;
 }
 
-function deleteSensor(req){
+function deleteSensor(req, params){
   const query = db.query('SELECT * FROM Company WHERE company_api_key = ? ', [params]);
     
   if(query.length  <1){
